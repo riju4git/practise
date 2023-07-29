@@ -60,4 +60,25 @@ public class AutoGenerateGettersProcessor extends AbstractProcessor {
         // Printing the generated code (optional)
         System.out.println(generatedCode.toString());
     }
+
+
+
+        private void generateGetter(TypeElement classElement, Element fieldElement) {
+        String packageName = processingEnv.getElementUtils().getPackageOf(classElement).toString();
+        String className = classElement.getSimpleName().toString();
+        String fieldType = fieldElement.asType().toString();
+        String fieldName = fieldElement.getSimpleName().toString();
+        String getterMethodName = "get" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
+
+        StringBuilder generatedCode = new StringBuilder();
+        generatedCode.append("package ").append(packageName).append(";\n\n");
+        generatedCode.append("public class ").append(className).append(" {\n");
+        generatedCode.append("\tpublic ").append(fieldType).append(" ").append(getterMethodName).append("() {\n");
+        generatedCode.append("\t\treturn this.").append(fieldName).append(";\n");
+        generatedCode.append("\t}\n");
+        generatedCode.append("}\n");
+
+        // Printing the generated code (optional)
+        System.out.println(generatedCode.toString());
+    }
 }
